@@ -1,3 +1,5 @@
+let myLibrary = [];
+
 function Book(Title, Author, NumberOfPages, ReadorNot) {
   this.Title = Title,
   this.Author = Author,
@@ -18,9 +20,19 @@ Book.prototype.info = function() {
     ending = ' has not read yet.'
   }
   string += ending;
-
   return string
 }
 
-let book1 = new Book('God Delusion', 'Richard Dawkins', 250, 'no')
-console.log(book1.info())
+let submitButton = document.getElementById('submit-button');
+
+submitButton.addEventListener('click',addBookToLibrary);
+
+function addBookToLibrary(){
+  let userInput = document.getElementById('user-input').value;
+  myLibrary.push(userInput)
+};
+
+
+
+
+
