@@ -27,12 +27,12 @@ let submitButton = document.getElementById('submit-button');
 
 submitButton.addEventListener('click',addBookToLibrary);
 
-function addBookToLibrary(){
-  let userInput = document.getElementById('user-input').value;
-  myLibrary.push(userInput)
+  function addBookToLibrary(){
+    let userInput = document.querySelectorAll('.user-input');
+    userInput.forEach(function(item){
+    bookInfo = item.value
+    myLibrary.push(bookInfo)
+    console.log(myLibrary)
+    })
 };
-
-
-
-
 
