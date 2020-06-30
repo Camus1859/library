@@ -27,6 +27,51 @@ html {
   font-size: 25px;
   border-radius: 50%;
   text-decoration: none;
-  
+  outline: none;
 }
 
+.user-button {
+  padding: 6px;
+  width: 700px;
+  border-top-style: none;
+  border-right-style: none;
+  border-left-style: none;
+  border-bottom-style: groove;
+  background-color: transparent;
+  color:   rgb(240, 229, 169) ;
+  margin: 8px;
+  font-size: 30px;
+  display: block;
+  box-sizing: border-box;
+
+
+}
+
+.user-button:focus {
+  outline: none;
+}
+
+#user-buttons-box {
+  border-radius: 5px;
+  background-color: rgb(94, 63, 22);
+  padding: 20px;
+  text-align: center;
+  margin-left: 500px;
+  margin-right: 500px;
+}
+
+#myCheck {
+  color: rgb(240, 229, 169);
+  font-size: 20px;
+  font-family: 'Pacifico',  cursive;
+
+}
+
+#submit-button {
+  font-family: 'Pacifico',  cursive;
+  color: rgb(240, 229, 169);
+  background-color:rgb(44, 38, 1) ;
+
+
+
+}
