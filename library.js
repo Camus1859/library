@@ -1,38 +1,45 @@
 let myLibrary = [];
-
-function Book(Title, Author, NumberOfPages, ReadorNot) {
-  this.Title = Title,
-  this.Author = Author,
-  this.NumberOfPages = NumberOfPages,
-  this.ReadorNot = ReadorNot
-}
-
+let title;
+let author;
+let numberOfPages;
+let readOrNot;
 let string;
 
-Book.prototype.info = function() {
-  string = `The ${this.Title} by ${this.Author}, ${this.NumberOfPages} pages`;
-  var ending;
+let submitButton = document.getElementById('submit-button');
+submitButton.addEventListener('click',addBookToLibrary);
 
-  if(this.ReadorNot === 'Yes' || this.ReadorNot === 'yes') {
+function Book(title, author, numberOfPages, readOrNot) {
+  this.title = title,
+  this.author = author,
+  this.numberOfPages = numberOfPages,
+  this.readorNot = readOrNot
+}
+
+Book.prototype.info = function() {
+  string = `The ${this.title} by ${this.author}, ${this.numberOfPages} pages`;
+  let ending;
+
+  if(this.readorNot === 'Yes' || this.readorNot === 'yes') {
     ending = ' already read.';
   }
-  else if(this.ReadorNot === 'No' || this.ReadorNot === 'no') {
+  else if(this.readorNot === 'No' || this.readorNot === 'no') {
     ending = ' has not read yet.'
   }
   string += ending;
   return string
 }
 
-let submitButton = document.getElementById('submit-button');
+function addBookToLibrary(){
+  title = document.getElementById('book-title').value;
+  author = document.getElementById('author').value;
+  numberOfPages = document.getElementById('pages').value;
+  readOrNot = document.getElementById('read-or-not').value;
+  myLibrary.push(title)
+  myLibrary.push(author)
+  myLibrary.push(numberOfPages)
+  myLibrary.push(readOrNot)
 
-submitButton.addEventListener('click',addBookToLibrary);
-
-  function addBookToLibrary(){
-    let userInput = document.querySelectorAll('.user-input');
-    userInput.forEach(function(item){
-    bookInfo = item.value
-    myLibrary.push(bookInfo)
-    console.log(myLibrary)
-    })
+  let book1 = new Book(title, author, numberOfPages, readOrNot)
+  console.log(book1)
 };
 
