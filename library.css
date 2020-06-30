@@ -43,35 +43,37 @@ html {
   font-size: 30px;
   display: block;
   box-sizing: border-box;
-
-
 }
 
 .user-button:focus {
   outline: none;
 }
 
-#user-buttons-box {
+#user-buttons-container {
   border-radius: 5px;
   background-color: rgb(94, 63, 22);
   padding: 20px;
   text-align: center;
   margin-left: 500px;
   margin-right: 500px;
+  background-color: hsla(32, 76%, 34%, 0.38); ;
 }
 
-#myCheck {
+#alreadyRead {
   color: rgb(240, 229, 169);
   font-size: 20px;
   font-family: 'Pacifico',  cursive;
-
+  opacity: 1;
 }
 
 #submit-button {
   font-family: 'Pacifico',  cursive;
   color: rgb(240, 229, 169);
   background-color:rgb(44, 38, 1) ;
+  opacity: 1;
+}
 
-
-
+::placeholder {
+  color: rgb(240, 229, 169);
+  opacity: .7; 
 }

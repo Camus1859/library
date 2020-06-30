@@ -14,13 +14,13 @@
 <body>
   <h1 id ="title">Book  Storage</h1>
   <button id ="add-book-button">Add New Book</button>
-  <div id="user-buttons-box">
-    
+  <div id="user-buttons-container">
+    <form>
       <input type='text' class="user-button" id="book-title"  placeholder="Book Title" value="">
       <input type='text' class="user-button"id='author'   placeholder="Author's Name" value=''>
       <input type='text' class="user-button"id='pages'  placeholder="# of Pages" value=''>
-      <label for="myCheck" id="myCheck">Already Read:</label> 
-      <input type="checkbox" id="myCheck">
+      <label for="myCheck" id='alreadyRead'>Already Read:</label> 
+      <input type="checkbox" id="checkBox">
 
     </form>
     <button id="submit-button">Submit</button>
@@ -33,3 +33,4 @@
   <script type="text/javascript" src="library.js"> </script>
 </body>
 </html>
+
