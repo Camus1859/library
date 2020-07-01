@@ -71,9 +71,21 @@ html {
   color: rgb(240, 229, 169);
   background-color:rgb(44, 38, 1) ;
   opacity: 1;
+  outline: none;
+
 }
 
 ::placeholder {
   color: rgb(240, 229, 169);
   opacity: .7; 
 }
+
+#book-title-container {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 150px
+}
+
+.books-title {
+  color: rgb(241, 223, 117)

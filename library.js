@@ -4,68 +4,69 @@ let author;
 let numberOfPages;
 let myCheck;
 let string;
+let bookTitleContainer
+let userButtonsContainer
+let infoLine;
 let submitButton = document.getElementById('submit-button');
 let addBookButton = document.getElementById('add-book-button');
 
-submitButton.addEventListener('click',addBookToLibrary);
-addBookButton.addEventListener('click',addAbook);
+userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
+bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
 
-// function Book(title, author, numberOfPages, readOrNot) {
-//   this.title = title,
-//   this.author = author,
-//   this.numberOfPages = numberOfPages,
-//   this.readorNot = readOrNot
-// }
+submitButton.addEventListener('click', addBookToLibrary);
+addBookButton.addEventListener('click', visibilityOn);
+submitButton.addEventListener('click', submitBookinfo);
 
-// Book.prototype.info = function() {
-//   string = `The ${this.title} by ${this.author}, ${this.numberOfPages} pages`;
-//   let ending;
+function Book(title, author, numberOfPages) {
+  this.title = title,
+  this.author = author,
+  this.numberOfPages = numberOfPages
+}
 
-//   if(this.readorNot === 'Yes' || this.readorNot === 'yes') {
-//     ending = ' already read.';
-//   }
-//   else if(this.readorNot === 'No' || this.readorNot === 'no') {
-//     ending = ' has not read yet.'
-//   }
-//   string += ending;
-//   return string
-// }
+Book.prototype.info = function() {
+  string = `The ${this.title} by ${this.author}, ${this.numberOfPages} pages`;
+  let ending;
+  let checkBox = document.getElementById("checkBox");
+
+
+  if(checkBox.checked == true) {
+    ending = ' already read.';
+    console.log(ending)
+  }
+  else if(checkBox.checked == false) {
+    ending = ' has not been read yet.'
+  }
+  string += ending;
+  return string
+}
 
 function addBookToLibrary(){
   title = document.getElementById('book-title').value
   author = document.getElementById('author').value;
   numberOfPages = document.getElementById('pages').value;
-  readOrNot = document.getElementById('read-or-not').value;
-  let book1 = new Book(title, author, numberOfPages, readOrNot)
+  let book1 = new Book(title, author, numberOfPages)
   myLibrary.push(book1)
 };
 
 function visibilityOff(){
-  document.getElementById('book-title').style.visibility='hidden';
-  author = document.getElementById('author').style.visibility='hidden';
-  numberOfPages = document.getElementById('pages').style.visibility='hidden';
-  alreadyRead = document.getElementById('alreadyRead').style.visibility='hidden';
-  checkBox = document.getElementById('checkBox').style.visibility='hidden'
-  submitButton = document.getElementById('submit-button').style.visibility='hidden';
-  userButtonsContainer = document.getElementById('user-buttons-container').style.visibility='hidden'
-  
-
+userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
 }
-visibilityOff();
 
-function addAbook() {
-  visibilityOn()
-}
 
 function visibilityOn() {
-  document.getElementById('book-title').style.visibility='visible';
-  author = document.getElementById('author').style.visibility='visible';
-  numberOfPages = document.getElementById('pages').style.visibility='visible';
-  userSubmitButton = document.getElementById('submit-button').style.visibility='visible';
-  alreadyRead = document.getElementById('alreadyRead').style.visibility='visible';
-  checkBox = document.getElementById('checkBox').style.visibility='visible';
-  submitButton = document.getElementById('submit-button').style.visibility='visible';
-  userButtonsContainer = document.getElementById('user-buttons-container').style.visibility='visible';
+userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
+}
 
+//Submit button clicked, clears screens adds info title.
+function submitBookinfo() {
+  visibilityOff()
+  infoLine = document.querySelectorAll('books-title');
+  bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid'
+}
+
+
+
+function createInfoLine() {
 
 }
+
