@@ -64,7 +64,6 @@ document.getElementById("myForm").reset()
 function submitBookinfo() {
   visibilityOff()
   bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid'
-  arrayOrganizer()
 }
 
 function arrayOrganizer() {
@@ -83,14 +82,16 @@ function arrayOrganizer() {
 }
 
 function createInfoLine() {
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 4; i++) {
     let h3 = document.createElement('h3');
     let newContent = document.createTextNode(allArrayData.split(" ")[i])
     h3.classList.add('eachBook')
     h3.appendChild(newContent);
     bookTitleContainer = document.getElementById('book-title-container')
-    bookTitleContainer.appendChild(h3)
+    x = bookTitleContainer.appendChild(h3)
+    console.log(x)
   }
 }
+
 
 

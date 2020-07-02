@@ -8,10 +8,20 @@ html {
 #title {
   color: aliceblue;
   text-align: center;
-  margin-top: 2%;
+  margin-top: -1%;
   font-size: 70px;
   font-family: 'Pacifico', cursive;
   color: rgb(240, 229, 169);
+}
+
+#title2 {
+  color: aliceblue;
+  text-align: center;
+  margin-top: -3%;
+  font-size: 30px;
+  font-family: 'Pacifico', cursive;
+  color: rgb(240, 229, 169);
+
 }
 
 #add-book-button {
@@ -84,23 +94,23 @@ html {
   display: grid;
   justify-content: center;
   grid-template-columns: auto auto auto auto;
-  grid-gap: 50px;
+  grid-gap: 10px;
   text-align: center; 
 }
 
 .eachBook {
-  grid-template-columns: auto auto auto auto;
-  grid-gap: 50px;
-  color: rgb(233, 10, 3);
-  background-color:rgb(68, 40, 4);
-  margin: auto;
-  text-align: center;
+  color: white;
   font-size: 30px;
-  margin-top: -70px;
+  margin-top: -25px;
+    font-family: 'Pacifico',  cursive;
+
  
 }
 
 .books-title {
-  color: rgb(240, 229, 169);
-  background-color:  rgb(68, 40, 4);
+  color: gold;
+  font-size: 50px;
+  font-family: 'Pacifico',  cursive;
+
+  
 }
