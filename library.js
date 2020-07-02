@@ -28,7 +28,6 @@ Book.prototype.info = function() {
   let ending;
   let checkBox = document.getElementById("checkBox");
 
-
   if(checkBox.checked == true) {
     ending = ' already read.';
     console.log(ending)
@@ -46,6 +45,9 @@ function addBookToLibrary(){
   numberOfPages = document.getElementById('pages').value;
   let book1 = new Book(title, author, numberOfPages)
   myLibrary.push(book1)
+  console.log(book1)
+  console.log(myLibrary)
+  arrayOrganizer()
 };
 
 function visibilityOff(){
@@ -55,18 +57,40 @@ userButtonsContainer = document.getElementById('user-buttons-container').style.d
 
 function visibilityOn() {
 userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
+bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
+document.getElementById("myForm").reset()
 }
 
-//Submit button clicked, clears screens adds info title.
 function submitBookinfo() {
   visibilityOff()
-  infoLine = document.querySelectorAll('books-title');
   bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid'
+  arrayOrganizer()
 }
 
+function arrayOrganizer() {
+  let lastBook = myLibrary[myLibrary.length - 1]
+  let checkBox = document.getElementById("checkBox");
+  let status;
+  if(checkBox.checked == true) {
+    status = 'Yes'
+  }
+  else if(checkBox.checked == false) {
+    status = 'No'
+  }
+ allArrayData = `${lastBook.title} ${lastBook.author} ${lastBook.numberOfPages} ${status}`;
+ createInfoLine()
 
+}
 
 function createInfoLine() {
-
+  for (let i = 0; i < 2; i++) {
+    let h3 = document.createElement('h3');
+    let newContent = document.createTextNode(allArrayData.split(" ")[i])
+    h3.classList.add('eachBook')
+    h3.appendChild(newContent);
+    bookTitleContainer = document.getElementById('book-title-container')
+    bookTitleContainer.appendChild(h3)
+  }
 }
+
 

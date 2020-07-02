@@ -84,8 +84,23 @@ html {
   display: grid;
   justify-content: center;
   grid-template-columns: auto auto auto auto;
-  grid-gap: 150px
+  grid-gap: 50px;
+  text-align: center; 
+}
+
+.eachBook {
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 50px;
+  color: rgb(233, 10, 3);
+  background-color:rgb(68, 40, 4);
+  margin: auto;
+  text-align: center;
+  font-size: 30px;
+  margin-top: -70px;
+ 
 }
 
 .books-title {
-  color: rgb(241, 223, 117)
+  color: rgb(240, 229, 169);
+  background-color:  rgb(68, 40, 4);
+}
