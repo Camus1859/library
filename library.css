@@ -1,3 +1,4 @@
+
 html {
   background: url(https://images.unsplash.com/photo-1583920230213-bdd2d6e7bd50?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80)  center center fixed;
   background-size: contain;
@@ -21,7 +22,6 @@ html {
   font-size: 30px;
   font-family: 'Pacifico', cursive;
   color: rgb(240, 229, 169);
-
 }
 
 #add-book-button {
@@ -82,7 +82,6 @@ html {
   background-color:rgb(44, 38, 1) ;
   opacity: 1;
   outline: none;
-
 }
 
 ::placeholder {
@@ -96,21 +95,131 @@ html {
   grid-template-columns: auto auto auto auto;
   grid-gap: 10px;
   text-align: center; 
+  margin-top: -40px;
 }
 
 .eachBook {
   color: white;
   font-size: 30px;
   margin-top: -25px;
-    font-family: 'Pacifico',  cursive;
-
- 
+  font-family: 'Pacifico',  cursive;
 }
 
 .books-title {
   color: gold;
   font-size: 50px;
   font-family: 'Pacifico',  cursive;
-
-  
 }
+
+
+
+#icon-trash {
+  width: 25px;
+  height: 25px;
+  overflow: hidden;
+  margin-left: 1200px;
+  margin-top: -93px;
+  position: relative;
+}
+
+#icon-trash:hover {
+  transform: scale(1.5);
+  }
+
+#icon-trash .trash-lid {
+  background-color: #E5E9EA;
+  width: 62%;
+  height: 10%;
+  position: absolute;
+  left: 50%;
+  margin-left: -31%;
+  top: 10.5%;
+  background-color: #000;
+  border-top-left-radius: 80%;
+  border-top-right-radius: 80%;
+  -webkit-transform: rotate(-5deg);
+  -moz-transform: rotate(-5deg);
+  -ms-transform: rotate(-5deg);
+  transform: rotate(-5deg); 
+}
+
+#icon-trash .trash-lid:after {
+  content: "";
+  width: 26%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  margin-left: -13%;
+  margin-top: -10%;
+  background-color: inherit;
+  border-top-left-radius: 30%;
+  border-top-right-radius: 30%;
+  -webkit-transform: rotate(-1deg);
+  -moz-transform: rotate(-1deg);
+  -ms-transform: rotate(-1deg);
+  transform: rotate(-1deg); 
+}
+
+#icon-trash .trash-container {
+  background-color: #E5E9EA;
+  width: 56%;
+  height: 65%;
+  position: absolute;
+  left: 50%;
+  margin-left: -28%;
+  bottom: 10%;
+  background-color: #000;
+  border-bottom-left-radius: 15%;
+  border-bottom-right-radius: 15%;
+}
+
+#icon-trash .trash-container:after {
+  content: "";
+  width: 110%;
+  height: 12%;
+  position: absolute;
+  left: 50%;
+  margin-left: -55%;
+  top: 0;
+  background-color: inherit;
+  border-bottom-left-radius: 45%;
+  border-bottom-right-radius: 45%;
+}
+
+#icon-trash .trash-line-1 {
+  width: 4%;
+  height: 50%;
+  position: absolute;
+  left: 38%;
+  margin-left: -2%;
+  bottom: 17%;
+  background-color: #252527;
+}
+
+#icon-trash .trash-line-2 {
+  width: 4%;
+  height: 50%;
+  position: absolute;
+  left: 50%;
+  margin-left: -2%;
+  bottom: 17%;
+  background-color: #252527;
+}
+
+#icon-trash .trash-line-3 {
+  width: 4%;
+  height: 50%;
+  position: absolute;
+  left: 62%;
+  margin-left: -2%;
+  bottom: 17%;
+  background-color: #252527;
+}
+
+a {
+  position: absolute;
+  bottom: 12px;
+  right: 20px;
+}
+
+
