@@ -1,4 +1,3 @@
-
 html {
   background: url(https://images.unsplash.com/photo-1583920230213-bdd2d6e7bd50?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80)  center center fixed;
   background-size: contain;
@@ -32,7 +31,7 @@ html {
   background-color: rgb(68, 40, 4);
   border: none;
   margin-left: 44%;
-  margin-top: 8%;
+  margin-top: 11%;
   padding: 10px;
   font-size: 25px;
   border-radius: 50%;
@@ -92,33 +91,57 @@ html {
 #book-title-container {
   display: grid;
   justify-content: center;
-  grid-template-columns: auto auto auto auto;
-  grid-gap: 10px;
+  grid-template-columns: 15% 15% 8% 8% 8%;
   text-align: center; 
   margin-top: -40px;
+  margin-left: -10%;
 }
 
 .eachBook {
   color: white;
   font-size: 30px;
-  margin-top: -25px;
-  font-family: 'Pacifico',  cursive;
+  max-width: 100%;
+  word-wrap: break-word;
+  height:auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
+
+#theDiv {
+  height:auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
 
 .books-title {
   color: gold;
   font-size: 50px;
-  font-family: 'Pacifico',  cursive;
+  position: relative;
+  padding: 25px;
+}
+
+.fa-trash-o {
+  color: #E5E9EA;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  /* align-items: center;
+  justify-content: center;
+  text-align: center; */
 }
 
 
-
-#icon-trash {
+/* #icon-trash {
   width: 25px;
   height: 25px;
   overflow: hidden;
-  margin-left: 1200px;
-  margin-top: -93px;
   position: relative;
 }
 
@@ -126,14 +149,13 @@ html {
   transform: scale(1.5);
   }
 
+
 #icon-trash .trash-lid {
   background-color: #E5E9EA;
   width: 62%;
   height: 10%;
   position: absolute;
   left: 50%;
-  margin-left: -31%;
-  top: 10.5%;
   background-color: #000;
   border-top-left-radius: 80%;
   border-top-right-radius: 80%;
@@ -150,7 +172,6 @@ html {
   position: absolute;
   left: 50%;
   margin-left: -13%;
-  margin-top: -10%;
   background-color: inherit;
   border-top-left-radius: 30%;
   border-top-right-radius: 30%;
@@ -223,3 +244,7 @@ a {
 }
 
 
+
+
+
+ */
