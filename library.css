@@ -92,9 +92,11 @@ html {
   display: grid;
   justify-content: center;
   grid-template-columns: 15% 15% 8% 8% 8%;
+  grid-template-rows: 105px;  
   text-align: center; 
   margin-top: -40px;
   margin-left: -10%;
+
 }
 
 .eachBook {
@@ -108,6 +110,10 @@ html {
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin-top: 30px;
+  margin-bottom: 0px;
+
+
 }
 
 #theDiv {
@@ -132,119 +138,12 @@ html {
   width: 25px;
   height: 25px;
   position: relative;
-  /* align-items: center;
+  align-items: center;
   justify-content: center;
-  text-align: center; */
+  text-align: center;
+  margin-bottom: -14px;
 }
 
-
-/* #icon-trash {
-  width: 25px;
-  height: 25px;
-  overflow: hidden;
-  position: relative;
-}
-
-#icon-trash:hover {
+.fa-trash-o:hover {
   transform: scale(1.5);
-  }
-
-
-#icon-trash .trash-lid {
-  background-color: #E5E9EA;
-  width: 62%;
-  height: 10%;
-  position: absolute;
-  left: 50%;
-  background-color: #000;
-  border-top-left-radius: 80%;
-  border-top-right-radius: 80%;
-  -webkit-transform: rotate(-5deg);
-  -moz-transform: rotate(-5deg);
-  -ms-transform: rotate(-5deg);
-  transform: rotate(-5deg); 
 }
-
-#icon-trash .trash-lid:after {
-  content: "";
-  width: 26%;
-  height: 100%;
-  position: absolute;
-  left: 50%;
-  margin-left: -13%;
-  background-color: inherit;
-  border-top-left-radius: 30%;
-  border-top-right-radius: 30%;
-  -webkit-transform: rotate(-1deg);
-  -moz-transform: rotate(-1deg);
-  -ms-transform: rotate(-1deg);
-  transform: rotate(-1deg); 
-}
-
-#icon-trash .trash-container {
-  background-color: #E5E9EA;
-  width: 56%;
-  height: 65%;
-  position: absolute;
-  left: 50%;
-  margin-left: -28%;
-  bottom: 10%;
-  background-color: #000;
-  border-bottom-left-radius: 15%;
-  border-bottom-right-radius: 15%;
-}
-
-#icon-trash .trash-container:after {
-  content: "";
-  width: 110%;
-  height: 12%;
-  position: absolute;
-  left: 50%;
-  margin-left: -55%;
-  top: 0;
-  background-color: inherit;
-  border-bottom-left-radius: 45%;
-  border-bottom-right-radius: 45%;
-}
-
-#icon-trash .trash-line-1 {
-  width: 4%;
-  height: 50%;
-  position: absolute;
-  left: 38%;
-  margin-left: -2%;
-  bottom: 17%;
-  background-color: #252527;
-}
-
-#icon-trash .trash-line-2 {
-  width: 4%;
-  height: 50%;
-  position: absolute;
-  left: 50%;
-  margin-left: -2%;
-  bottom: 17%;
-  background-color: #252527;
-}
-
-#icon-trash .trash-line-3 {
-  width: 4%;
-  height: 50%;
-  position: absolute;
-  left: 62%;
-  margin-left: -2%;
-  bottom: 17%;
-  background-color: #252527;
-}
-
-a {
-  position: absolute;
-  bottom: 12px;
-  right: 20px;
-}
-
-
-
-
-
- */
