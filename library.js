@@ -12,19 +12,18 @@ let addBookButton = document.getElementById('add-book-button');
 function noDisplay() {
   userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
   bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
-}
-noDisplay()
+};
+noDisplay();
 
 submitButton.addEventListener('click', addBookToLibrary);
 addBookButton.addEventListener('click', visibilityOn);
 submitButton.addEventListener('click', submitBookinfo);
 
-
 function Book(title, author, numberOfPages) {
   this.title = title,
   this.author = author,
   this.numberOfPages = numberOfPages
-}
+};
 
 function addBookToLibrary(){
   title = document.getElementById('book-title').value
@@ -51,16 +50,17 @@ function submitBookinfo() {
 };
 
 function arrayOrganizer() {
+  let toggleButton = document.getElementById('toggle-button');
   let lastBook = myLibrary[myLibrary.length - 1]
   let checkBox = document.getElementById("checkBox");
   let status;
   if(checkBox.checked == true) {
-    status = 'Yes'
+    status = toggleButton
   }
   else if(checkBox.checked == false) {
-    status = 'No'
+    status = toggleButton
   }
- allArrayData = {1:lastBook.title, 2:lastBook.author, 3:lastBook.numberOfPages, 4:status}
+ allArrayData = {1:lastBook.title, 2:lastBook.author, 3:lastBook.numberOfPages}
  createInfoLine(allArrayData)
 };
 
@@ -88,8 +88,32 @@ function createInfoLine(obj) {
       x = bookTitleContainer.appendChild(h3)
         x.setAttribute('data-number', myLibrary.length -1)
     }
+    bookTitleContainer.appendChild(createToggleButton())
   bookTitleContainer.appendChild(createTrashCan())
 };
+
+{/* <label class="switch" id="toggle-button">
+  <input type = "checkbox" checked>
+  <span class ="slider round"></span>
+</label> */}
+
+function createToggleButton() {
+  let labelDiv = document.createElement('label')
+  labelDiv.setAttribute('data-number', myLibrary.length - 1)
+  labelDiv.classList = 'switch'
+  labelDiv.id = 'toggle-button'
+  let inputDiv = document.createElement('input')
+  inputDiv.setAttribute('data-number', myLibrary.length - 1)
+  inputDiv.setAttribute('type', 'checkbox')
+  labelDiv.appendChild(inputDiv)
+  let spanDiv = document.createElement('span')
+  spanDiv.setAttribute('data-number', myLibrary.length - 1)
+  spanDiv.classList = ('slider round')
+  labelDiv.insertBefore(spanDiv, inputDiv.nextSibling)
+  // inputDiv.appendChild(spanDiv)
+  return labelDiv
+};
+
 
 function createTrashCan(){
   let div = document.createElement('div')
@@ -103,12 +127,9 @@ function createTrashCan(){
   return div
 };
 
-
 function deleteLine(e) {
-  let dataA = e.target.getAttribute('data-number')
-  console.log(dataA)
- 
-   let dataFromDiv = Array.from(document.querySelectorAll(`h3[data-number="${dataA}"]`))
+  let dataA = e.target.getAttribute('data-number') 
+  let dataFromDiv = Array.from(document.querySelectorAll(`h3[data-number="${dataA}"]`))
    dataFromDiv.forEach(item => {
      bookTitleContainer = document.getElementById('book-title-container')
      bookTitleContainer.removeChild(item)
@@ -116,7 +137,5 @@ function deleteLine(e) {
      bookRemoved = myLibrary.splice(dataA, 1)
      e.target.parentElement.remove()
      e.target.remove()
-     console.log(myLibrary)
  };
-
 
