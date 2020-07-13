@@ -126,6 +126,11 @@ function deleteLine(e) {
    dataFromDiv.forEach(item => {
      bookTitleContainer = document.getElementById('book-title-container')
      bookTitleContainer.removeChild(item)
+     let dataFromLabel = Array.from(document.querySelectorAll(`label[data-number="${dataA}"]`))
+     dataFromLabel.forEach(item =>{
+      bookTitleContainer = document.getElementById('book-title-container')
+      bookTitleContainer.removeChild(item)
+     })
   })
      bookRemoved = myLibrary.splice(dataA, 1)
      e.target.parentElement.remove()
