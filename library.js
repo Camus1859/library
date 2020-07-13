@@ -34,10 +34,12 @@ function addBookToLibrary(){
   numberOfPages = document.getElementById('pages').value;
   checkBox = document.getElementById('checkBox')
   checkBox.checked == true ? status = "Yes" : status ='No'
-  console.log(myLibrary)
   book1 = new Book(title, author, numberOfPages, status)
   myLibrary.push(book1)
   createInfoLine(book1)
+  console.log(book1.status)
+  console.log(myLibrary)
+
 };
 
 function visibilityOff(){
@@ -76,12 +78,11 @@ function createInfoLine(obj) {
 };
 
 function createToggleButton(obj) {
-
   let labelDiv = document.createElement('label')
   labelDiv.setAttribute('data-number', myLibrary.length - 1)
   labelDiv.classList = 'switch'
   labelDiv.id = 'toggle-button'
-  let inputDiv = document.createElement('input')
+  inputDiv = document.createElement('input')
   inputDiv.setAttribute('type', 'checkbox')
   inputDiv.setAttribute('data-number', myLibrary.length - 1)
   inputDiv.id = 'checkBox2'
@@ -91,12 +92,21 @@ function createToggleButton(obj) {
   spanDiv.classList = ('slider round')
   labelDiv.insertBefore(spanDiv, inputDiv.nextSibling);
   obj.status == "Yes" ? inputDiv.checked = true : inputDiv.checked = false
-  console.log(obj.status)
-
+  inputDiv.addEventListener('click', function(event) {;
+  toggleClickedNumber = event.target.getAttribute('data-number')
+  bookItem = myLibrary[toggleClickedNumber]
+  bookItem.toggle()
+  })
   return labelDiv
 };
 
-
+Book.prototype.toggle = function(){
+  if (this.status === "Yes"){
+    this.status = 'No'
+  } else if (this.status === 'No'){
+    this.status = 'Yes'
+  }
+}
 
 function createTrashCan(){
   let div = document.createElement('div')
@@ -122,4 +132,4 @@ function deleteLine(e) {
      e.target.remove()
  };
 
-
+  
