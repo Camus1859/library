@@ -12,6 +12,7 @@ let addBookButton = document.getElementById('add-book-button');
 let checkBox2 = document.getElementById('checkBox2')
 
 submitButton.addEventListener('click', addBookToLibrary);
+
 addBookButton.addEventListener('click', visibilityOn);
 submitButton.addEventListener('click', submitBookinfo);
 
@@ -28,18 +29,17 @@ function Book(title, author, numberOfPages, status) {
   this.status = status
 };
 
-function addBookToLibrary(){
+function addBookToLibrary(e){
   title = document.getElementById('book-title').value
   author = document.getElementById('author').value
   numberOfPages = document.getElementById('pages').value;
+
   checkBox = document.getElementById('checkBox')
   checkBox.checked == true ? status = "Yes" : status ='No'
   book1 = new Book(title, author, numberOfPages, status)
   myLibrary.push(book1)
   createInfoLine(book1)
-  console.log(book1.status)
-  console.log(myLibrary)
-
+  
 };
 
 function visibilityOff(){
@@ -53,8 +53,13 @@ function visibilityOn() {
 };
 
 function submitBookinfo() {
+  if (title === "" || author === "" || numberOfPages === "")  {
+    alert("Please Fill All Lines")
+    return false;
+  }else{
   visibilityOff()
   bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid'
+ }
 };
 
 function createInfoLine(obj) {
