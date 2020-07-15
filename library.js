@@ -51,7 +51,8 @@ UI.prototype.createInfoLine = function(book1){
   }
   let ui = new UI()
   bookTitleContainer.appendChild(ui.createToggleButton(book1))
-  bookTitleContainer.appendChild(createTrashCan())
+
+  bookTitleContainer.appendChild(ui.createTrashCan())
 };
 
 UI.prototype.deleteLine = function(e){
@@ -132,7 +133,7 @@ Book.prototype.toggle = function(){
   }
 }
 
-function createTrashCan(){
+UI.prototype.createTrashCan = function(){
   let div = document.createElement('div')
   div.setAttribute('data-number', myLibrary.length - 1)
   div.id = 'theDiv'
