@@ -1,38 +1,37 @@
 let myLibrary = [];
-
+function UI(){};
 let submitButton = document.getElementById('submit-button');
+let addBookButton = document.getElementById('add-book-button');
+
 submitButton.addEventListener('click', function(){
   let ui = new UI()
-
-  // the return is a bit unnecessary because we aren't trying to return a value here, but otherwise this is ok
- return ui.addBookToLibrary()
+  ui.addBookToLibrary()
 });
 
-let addBookButton = document.getElementById('add-book-button');
-addBookButton.addEventListener('click', visibilityOn);
+addBookButton.addEventListener('click', function(){
+  let ui = new UI()
+  ui.visibilityOn()
+});
 
-// this is a UI based function
-function noDisplay() {
+UI.prototype.noDisplay = function() {
  let userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
  let bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
 };
 // look into "DOMContentLoaded"
-noDisplay();
+let ui = new UI()
+ui.noDisplay();
 
-// this is also a UI based function
-function visibilityOff(){
+UI.prototype.visibilityOff = function(){
   let userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
 };
+let ui2 = new UI()
+ui2.visibilityOff()
 
-// UI
-function visibilityOn() {
+UI.prototype.visibilityOn = function() {
   let userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
   let bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
   document.getElementById("myForm").reset()
 };
-
-function UI(){}
-
 
 // Perhaps you can figure out a way to include an id, so then you can pass this down to other functions that need a unique ID tied to the Book instance and the DOM
 function Book(title, author, numberOfPages, status) {
@@ -103,7 +102,7 @@ UI.prototype.addBookToLibrary = function() {
     alert("Please Fill All Lines")
     return false;
   }else{
-  visibilityOff()
+  ui2.visibilityOff()
   bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid' 
   checkBox = document.getElementById('checkBox')
   checkBox.checked == true ? status = "Yes" : status ='No'
