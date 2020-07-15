@@ -20,7 +20,6 @@ function noDisplay() {
 };
 noDisplay();
 
-// Book Constructor 
 function Book(title, author, numberOfPages, status) {
   this.title = title,
   this.author = author,
@@ -28,60 +27,61 @@ function Book(title, author, numberOfPages, status) {
   this.status = status
 };
 
-// UI Constructor
-function UI() {}
+function UI(){}
 
 UI.prototype.createInfoLine = function(book1){
+  for(let property in book1){
+    if (book1.hasOwnProperty(property)) {
     h3 = document.createElement('h3');
-    newContent = document.createTextNode(`${book1.title}`)
-    newContent = document.createTextNode(`${book1.author}`)
-    newContent = document.createTextNode(`${book1.numberOfPages}`)
-    newContent = document.createTextNode(`${book1.status}`)
-    h3.classList.add('eachBook')
+    if (`${book1[property]}` == "No" || `${book1[property]}` == 'Yes') {
+      continue; 
+    }else {
+       newContent = document.createTextNode(`${book1[property]}`)
+    }h3.classList.add('eachBook')
     h3.appendChild(newContent);
     bookTitleContainer = document.getElementById('book-title-container')
-    x = bookTitleContainer.appendChild(h3)
-      x.setAttribute('data-number', myLibrary.length -1)
-    
-  
+    theBookLine = bookTitleContainer.appendChild(h3)
+      theBookLine.setAttribute('data-number', myLibrary.length -1)
+    }
+  }
   bookTitleContainer.appendChild(createToggleButton(book1))
   bookTitleContainer.appendChild(createTrashCan())
+};
 
+UI.prototype.deleteLine = function(e){
+  let dataA = e.target.getAttribute('data-number') 
+  let dataFromDiv = Array.from(document.querySelectorAll(`h3[data-number="${dataA}"]`))
+   dataFromDiv.forEach(item => {
+     bookTitleContainer = document.getElementById('book-title-container')
+     bookTitleContainer.removeChild(item)
+     let dataFromLabel = Array.from(document.querySelectorAll(`label[data-number="${dataA}"]`))
+     dataFromLabel.forEach(item =>{
+      bookTitleContainer = document.getElementById('book-title-container')
+      bookTitleContainer.removeChild(item)
+     })
+  })
+     bookRemoved = myLibrary.splice(dataA, 1)
+     e.target.parentElement.remove()
+     e.target.remove()
 }
 
 
-
-
-
-
-function addBookToLibrary(){
-  //Get users values
+function addBookToLibrary(e){
   title = document.getElementById('book-title').value
   author = document.getElementById('author').value
   numberOfPages = document.getElementById('pages').value;
-
-  // Instantiate book
-  book1 = new Book(title, author, numberOfPages, status)
-
-  //Instantiate UI
-  let ui = new UI();
-
-  //Add book to list
-  ui.createInfoLine(book1);
-  
-
-
-
   if (title === "" || author === "" || numberOfPages === "")  {
     alert("Please Fill All Lines")
     return false;
   }else{
-    visibilityOff()
-    bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid'
-    checkBox = document.getElementById('checkBox')
-    checkBox.checked == true ? status = "Yes" : status ='No'
-    myLibrary.push(book1)
-    createInfoLine(book1)
+  visibilityOff()
+  bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid' 
+  checkBox = document.getElementById('checkBox')
+  checkBox.checked == true ? status = "Yes" : status ='No'
+  book1 = new Book(title, author, numberOfPages, status)
+  myLibrary.push(book1)
+  let ui = new UI()
+  ui.createInfoLine(book1)
   }
 };
 
@@ -95,25 +95,6 @@ function visibilityOn() {
   document.getElementById("myForm").reset()
 };
 
-// function createInfoLine(obj) {
-//   for(let property in obj){
-//     if (obj.hasOwnProperty(property)) {
-//     h3 = document.createElement('h3');
-//     if (`${obj[property]}` == "No" || `${obj[property]}` == 'Yes') {
-//       continue; 
-//     }else {
-//        newContent = document.createTextNode(`${obj[property]}`)
-//     }
-//     h3.classList.add('eachBook')
-//     h3.appendChild(newContent);
-//     bookTitleContainer = document.getElementById('book-title-container')
-//     x = bookTitleContainer.appendChild(h3)
-//       x.setAttribute('data-number', myLibrary.length -1)
-//     }
-//   }
-//   bookTitleContainer.appendChild(createToggleButton(obj))
-//   bookTitleContainer.appendChild(createTrashCan())
-// };
 
 function createToggleButton(obj) {
   let labelDiv = document.createElement('label')
@@ -153,26 +134,11 @@ function createTrashCan(){
   let trashDiv = document.createElement('i')
   trashDiv.classList = 'fa fa-trash-o fa-2x'
   div.appendChild(trashDiv)
-  trashDiv.addEventListener('click', deleteLine)
+  let ui = new UI()
+  trashDiv.addEventListener('click', ui.deleteLine)
   trashDiv.setAttribute('data-number', myLibrary.length - 1)
   return div
 };
 
-function deleteLine(e) {
-  let dataA = e.target.getAttribute('data-number') 
-  let dataFromDiv = Array.from(document.querySelectorAll(`h3[data-number="${dataA}"]`))
-   dataFromDiv.forEach(item => {
-     bookTitleContainer = document.getElementById('book-title-container')
-     bookTitleContainer.removeChild(item)
-     let dataFromLabel = Array.from(document.querySelectorAll(`label[data-number="${dataA}"]`))
-     dataFromLabel.forEach(item =>{
-      bookTitleContainer = document.getElementById('book-title-container')
-      bookTitleContainer.removeChild(item)
-     })
-  })
-     bookRemoved = myLibrary.splice(dataA, 1)
-     e.target.parentElement.remove()
-     e.target.remove()
- };
 
   
