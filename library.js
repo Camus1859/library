@@ -11,7 +11,11 @@ let submitButton = document.getElementById('submit-button');
 let addBookButton = document.getElementById('add-book-button');
 let checkBox2 = document.getElementById('checkBox2')
 
-submitButton.addEventListener('click', addBookToLibrary);
+submitButton.addEventListener('click', function(){
+  let ui = new UI()
+ return ui.addBookToLibrary()
+});
+
 addBookButton.addEventListener('click', visibilityOn);
 
 function noDisplay() {
@@ -29,6 +33,7 @@ function Book(title, author, numberOfPages, status) {
 
 function UI(){}
 
+
 UI.prototype.createInfoLine = function(book1){
   for(let property in book1){
     if (book1.hasOwnProperty(property)) {
@@ -44,7 +49,8 @@ UI.prototype.createInfoLine = function(book1){
       theBookLine.setAttribute('data-number', myLibrary.length -1)
     }
   }
-  bookTitleContainer.appendChild(createToggleButton(book1))
+  let ui = new UI()
+  bookTitleContainer.appendChild(ui.createToggleButton(book1))
   bookTitleContainer.appendChild(createTrashCan())
 };
 
@@ -65,8 +71,7 @@ UI.prototype.deleteLine = function(e){
      e.target.remove()
 }
 
-
-function addBookToLibrary(e){
+UI.prototype.addBookToLibrary = function() {
   title = document.getElementById('book-title').value
   author = document.getElementById('author').value
   numberOfPages = document.getElementById('pages').value;
@@ -96,7 +101,7 @@ function visibilityOn() {
 };
 
 
-function createToggleButton(obj) {
+UI.prototype.createToggleButton = function(book1){
   let labelDiv = document.createElement('label')
   labelDiv.setAttribute('data-number', myLibrary.length - 1)
   labelDiv.classList = 'switch'
@@ -110,7 +115,7 @@ function createToggleButton(obj) {
   spanDiv.setAttribute('data-number', myLibrary.length - 1)
   spanDiv.classList = ('slider round')
   labelDiv.insertBefore(spanDiv, inputDiv.nextSibling);
-  obj.status == "Yes" ? inputDiv.checked = true : inputDiv.checked = false
+  book1.status == "Yes" ? inputDiv.checked = true : inputDiv.checked = false
   inputDiv.addEventListener('click', function(event) {;
   toggleClickedNumber = event.target.getAttribute('data-number')
   bookItem = myLibrary[toggleClickedNumber]
