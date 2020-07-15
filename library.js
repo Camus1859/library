@@ -10,7 +10,6 @@ let book1;
 let submitButton = document.getElementById('submit-button');
 let addBookButton = document.getElementById('add-book-button');
 let checkBox2 = document.getElementById('checkBox2')
-console.log(myLibrary)
 
 
 submitButton.addEventListener('click', function(){
