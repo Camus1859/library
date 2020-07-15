@@ -10,6 +10,8 @@ let book1;
 let submitButton = document.getElementById('submit-button');
 let addBookButton = document.getElementById('add-book-button');
 let checkBox2 = document.getElementById('checkBox2')
+console.log(myLibrary)
+
 
 submitButton.addEventListener('click', function(){
   let ui = new UI()
@@ -24,15 +26,24 @@ function noDisplay() {
 };
 noDisplay();
 
+function visibilityOff(){
+  userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
+};
+
+function visibilityOn() {
+  userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
+  bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
+  document.getElementById("myForm").reset()
+};
+
+function UI(){}
+
 function Book(title, author, numberOfPages, status) {
   this.title = title,
   this.author = author,
   this.numberOfPages = numberOfPages
   this.status = status
 };
-
-function UI(){}
-
 
 UI.prototype.createInfoLine = function(book1){
   for(let property in book1){
@@ -51,7 +62,6 @@ UI.prototype.createInfoLine = function(book1){
   }
   let ui = new UI()
   bookTitleContainer.appendChild(ui.createToggleButton(book1))
-
   bookTitleContainer.appendChild(ui.createTrashCan())
 };
 
@@ -70,6 +80,11 @@ UI.prototype.deleteLine = function(e){
      bookRemoved = myLibrary.splice(dataA, 1)
      e.target.parentElement.remove()
      e.target.remove()
+     let dataNumAll = Array.from(document.querySelectorAll(`[data-number]`))
+     dataNumAll.forEach(item => {
+       dataB = item.getAttribute('data-number')
+       item.setAttribute('data-number', dataB - 1) 
+     })
 }
 
 UI.prototype.addBookToLibrary = function() {
@@ -90,17 +105,6 @@ UI.prototype.addBookToLibrary = function() {
   ui.createInfoLine(book1)
   }
 };
-
-function visibilityOff(){
-  userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
-};
-
-function visibilityOn() {
-  userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
-  bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
-  document.getElementById("myForm").reset()
-};
-
 
 UI.prototype.createToggleButton = function(book1){
   let labelDiv = document.createElement('label')
