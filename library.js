@@ -1,3 +1,5 @@
+// we want to avoid globals as much as possible. a lot of these variables do not need to be instantiated here, nor in the global space.
+
 let myLibrary = [];
 let title;
 let author;
@@ -14,21 +16,27 @@ let checkBox2 = document.getElementById('checkBox2')
 
 submitButton.addEventListener('click', function(){
   let ui = new UI()
+
+  // the return is a bit unnecessary because we aren't trying to return a value here, but otherwise this is ok
  return ui.addBookToLibrary()
 });
 
 addBookButton.addEventListener('click', visibilityOn);
 
+// this is a UI based function
 function noDisplay() {
   userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
   bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
 };
+// look into "DOMContentLoaded"
 noDisplay();
 
+// this is also a UI based function
 function visibilityOff(){
   userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
 };
 
+// UI
 function visibilityOn() {
   userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
   bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
@@ -37,6 +45,8 @@ function visibilityOn() {
 
 function UI(){}
 
+
+// Perhaps you can figure out a way to include an id, so then you can pass this down to other functions that need a unique ID tied to the Book instance and the DOM
 function Book(title, author, numberOfPages, status) {
   this.title = title,
   this.author = author,
@@ -59,27 +69,38 @@ UI.prototype.createInfoLine = function(book1){
       theBookLine.setAttribute('data-number', myLibrary.length -1)
     }
   }
+  // UI might be a great thing to instantiate in the global space because we need it in so many places. that's an example of an appropriate variable to have globally
   let ui = new UI()
   bookTitleContainer.appendChild(ui.createToggleButton(book1))
   bookTitleContainer.appendChild(ui.createTrashCan())
 };
 
 UI.prototype.deleteLine = function(e){
-  let dataA = e.target.getAttribute('data-number') 
+  let dataA = e.target.getAttribute('data-number')
+  // Consider reducing the number of loops you have here
+  // all of your elements have 1 commonality- the data number. No need to have separate loops to delete them.  
   let dataFromDiv = Array.from(document.querySelectorAll(`h3[data-number="${dataA}"]`))
    dataFromDiv.forEach(item => {
      bookTitleContainer = document.getElementById('book-title-container')
      bookTitleContainer.removeChild(item)
+
+     // there is only one Label per row, so this doesn't have to be an array, nor does it have to be a looop
      let dataFromLabel = Array.from(document.querySelectorAll(`label[data-number="${dataA}"]`))
      dataFromLabel.forEach(item =>{
       bookTitleContainer = document.getElementById('book-title-container')
       bookTitleContainer.removeChild(item)
      })
   })
+
+  // this is a Book prototype method
+  // separation of concerns, we do not want to give UI based functions power to alter things to do with Book objects, we only want to focus on the DOM/UI
      bookRemoved = myLibrary.splice(dataA, 1)
      e.target.parentElement.remove()
      e.target.remove()
+     // not sure what this is meant to achieve
+     
      let dataNumAll = Array.from(document.querySelectorAll(`[data-number]`))
+     console.log(dataNumAll)
      dataNumAll.forEach(item => {
        dataB = item.getAttribute('data-number')
        item.setAttribute('data-number', dataB - 1) 
