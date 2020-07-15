@@ -12,9 +12,7 @@ let addBookButton = document.getElementById('add-book-button');
 let checkBox2 = document.getElementById('checkBox2')
 
 submitButton.addEventListener('click', addBookToLibrary);
-
 addBookButton.addEventListener('click', visibilityOn);
-submitButton.addEventListener('click', submitBookinfo);
 
 function noDisplay() {
   userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
@@ -33,13 +31,18 @@ function addBookToLibrary(e){
   title = document.getElementById('book-title').value
   author = document.getElementById('author').value
   numberOfPages = document.getElementById('pages').value;
-
+  if (title === "" || author === "" || numberOfPages === "")  {
+    alert("Please Fill All Lines")
+    return false;
+  }else{
+  visibilityOff()
+  bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid' 
   checkBox = document.getElementById('checkBox')
   checkBox.checked == true ? status = "Yes" : status ='No'
   book1 = new Book(title, author, numberOfPages, status)
   myLibrary.push(book1)
   createInfoLine(book1)
-  
+  }
 };
 
 function visibilityOff(){
@@ -50,16 +53,6 @@ function visibilityOn() {
   userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
   bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
   document.getElementById("myForm").reset()
-};
-
-function submitBookinfo() {
-  if (title === "" || author === "" || numberOfPages === "")  {
-    alert("Please Fill All Lines")
-    return false;
-  }else{
-  visibilityOff()
-  bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid'
- }
 };
 
 function createInfoLine(obj) {
