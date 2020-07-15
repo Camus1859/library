@@ -1,19 +1,6 @@
-// we want to avoid globals as much as possible. a lot of these variables do not need to be instantiated here, nor in the global space.
-
 let myLibrary = [];
-let title;
-let author;
-let numberOfPages;
-let string;
-let bookTitleContainer = document.getElementById('book-title-container')
-let userButtonsContainer
-let h3;
-let book1; 
+
 let submitButton = document.getElementById('submit-button');
-let addBookButton = document.getElementById('add-book-button');
-let checkBox2 = document.getElementById('checkBox2')
-
-
 submitButton.addEventListener('click', function(){
   let ui = new UI()
 
@@ -21,25 +8,26 @@ submitButton.addEventListener('click', function(){
  return ui.addBookToLibrary()
 });
 
+let addBookButton = document.getElementById('add-book-button');
 addBookButton.addEventListener('click', visibilityOn);
 
 // this is a UI based function
 function noDisplay() {
-  userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
-  bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
+ let userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
+ let bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
 };
 // look into "DOMContentLoaded"
 noDisplay();
 
 // this is also a UI based function
 function visibilityOff(){
-  userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
+  let userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
 };
 
 // UI
 function visibilityOn() {
-  userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
-  bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
+  let userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
+  let bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
   document.getElementById("myForm").reset()
 };
 
@@ -57,20 +45,21 @@ function Book(title, author, numberOfPages, status) {
 UI.prototype.createInfoLine = function(book1){
   for(let property in book1){
     if (book1.hasOwnProperty(property)) {
-    h3 = document.createElement('h3');
+    let h3 = document.createElement('h3');
     if (`${book1[property]}` == "No" || `${book1[property]}` == 'Yes') {
       continue; 
     }else {
        newContent = document.createTextNode(`${book1[property]}`)
     }h3.classList.add('eachBook')
     h3.appendChild(newContent);
-    bookTitleContainer = document.getElementById('book-title-container')
-    theBookLine = bookTitleContainer.appendChild(h3)
+    let bookTitleContainer = document.getElementById('book-title-container')
+    let theBookLine = bookTitleContainer.appendChild(h3)
       theBookLine.setAttribute('data-number', myLibrary.length -1)
     }
   }
   // UI might be a great thing to instantiate in the global space because we need it in so many places. that's an example of an appropriate variable to have globally
   let ui = new UI()
+  let bookTitleContainer = document.getElementById('book-title-container')
   bookTitleContainer.appendChild(ui.createToggleButton(book1))
   bookTitleContainer.appendChild(ui.createTrashCan())
 };
@@ -81,13 +70,12 @@ UI.prototype.deleteLine = function(e){
   // all of your elements have 1 commonality- the data number. No need to have separate loops to delete them.  
   let dataFromDiv = Array.from(document.querySelectorAll(`h3[data-number="${dataA}"]`))
    dataFromDiv.forEach(item => {
-     bookTitleContainer = document.getElementById('book-title-container')
+     let bookTitleContainer = document.getElementById('book-title-container')
      bookTitleContainer.removeChild(item)
 
      // there is only one Label per row, so this doesn't have to be an array, nor does it have to be a looop
      let dataFromLabel = Array.from(document.querySelectorAll(`label[data-number="${dataA}"]`))
      dataFromLabel.forEach(item =>{
-      bookTitleContainer = document.getElementById('book-title-container')
       bookTitleContainer.removeChild(item)
      })
   })
@@ -119,7 +107,7 @@ UI.prototype.addBookToLibrary = function() {
   bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid' 
   checkBox = document.getElementById('checkBox')
   checkBox.checked == true ? status = "Yes" : status ='No'
-  book1 = new Book(title, author, numberOfPages, status)
+  let book1 = new Book(title, author, numberOfPages, status)
   myLibrary.push(book1)
   let ui = new UI()
   ui.createInfoLine(book1)
