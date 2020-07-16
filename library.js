@@ -2,6 +2,13 @@ let myLibrary = [];
 function UI(){};
 let submitButton = document.getElementById('submit-button');
 let addBookButton = document.getElementById('add-book-button');
+let add = (function () {
+  let counter = -1;
+  return function () {
+    counter = counter + 1;
+    return counter
+  }
+})()
 
 submitButton.addEventListener('click', function(){
   let ui = new UI()
@@ -18,14 +25,14 @@ UI.prototype.noDisplay = function() {
  let bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
 };
 // look into "DOMContentLoaded"
-let ui = new UI()
+let ui = new UI();
 ui.noDisplay();
 
 UI.prototype.visibilityOff = function(){
   let userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
 };
-let ui2 = new UI()
-ui2.visibilityOff()
+let ui2 = new UI();
+ui2.visibilityOff();
 
 UI.prototype.visibilityOn = function() {
   let userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
@@ -42,6 +49,7 @@ function Book(title, author, numberOfPages, status) {
 };
 
 UI.prototype.createInfoLine = function(book1){
+  counter = add()
   for(let property in book1){
     if (book1.hasOwnProperty(property)) {
     let h3 = document.createElement('h3');
@@ -49,11 +57,12 @@ UI.prototype.createInfoLine = function(book1){
       continue; 
     }else {
        newContent = document.createTextNode(`${book1[property]}`)
-    }h3.classList.add('eachBook')
+    }
+    h3.classList.add('eachBook')
     h3.appendChild(newContent);
     let bookTitleContainer = document.getElementById('book-title-container')
     let theBookLine = bookTitleContainer.appendChild(h3)
-      theBookLine.setAttribute('data-number', myLibrary.length -1)
+    theBookLine.setAttribute('data-number', counter )
     }
   }
   // UI might be a great thing to instantiate in the global space because we need it in so many places. that's an example of an appropriate variable to have globally
@@ -64,7 +73,9 @@ UI.prototype.createInfoLine = function(book1){
 };
 
 UI.prototype.deleteLine = function(e){
+
   let dataA = e.target.getAttribute('data-number')
+  console.log(dataA)
   // Consider reducing the number of loops you have here
   // all of your elements have 1 commonality- the data number. No need to have separate loops to delete them.  
   let dataFromDiv = Array.from(document.querySelectorAll(`h3[data-number="${dataA}"]`))
@@ -86,12 +97,15 @@ UI.prototype.deleteLine = function(e){
      e.target.remove()
      // not sure what this is meant to achieve
      
-     let dataNumAll = Array.from(document.querySelectorAll(`[data-number]`))
-     console.log(dataNumAll)
-     dataNumAll.forEach(item => {
-       dataB = item.getAttribute('data-number')
-       item.setAttribute('data-number', dataB - 1) 
-     })
+    //  let dataNumAll = Array.from(document.querySelectorAll(`[data-number]`))
+    //  dataNumAll.forEach(item => {
+    //    dataB = item.getAttribute('data-number')
+    //    if (dataB === "0" ) {
+    //      return;
+    //    }else{
+    //     item.setAttribute('data-number', dataB - 1) 
+    //    }
+    //  })
 }
 
 UI.prototype.addBookToLibrary = function() {
@@ -115,24 +129,28 @@ UI.prototype.addBookToLibrary = function() {
 
 UI.prototype.createToggleButton = function(book1){
   let labelDiv = document.createElement('label')
-  labelDiv.setAttribute('data-number', myLibrary.length - 1)
   labelDiv.classList = 'switch'
   labelDiv.id = 'toggle-button'
   inputDiv = document.createElement('input')
   inputDiv.setAttribute('type', 'checkbox')
-  inputDiv.setAttribute('data-number', myLibrary.length - 1)
   inputDiv.id = 'checkBox2'
   labelDiv.appendChild(inputDiv)
   let spanDiv = document.createElement('span')
-  spanDiv.setAttribute('data-number', myLibrary.length - 1)
   spanDiv.classList = ('slider round')
   labelDiv.insertBefore(spanDiv, inputDiv.nextSibling);
   book1.status == "Yes" ? inputDiv.checked = true : inputDiv.checked = false
+  labelDiv.setAttribute('data-number', counter )
+  inputDiv.setAttribute('data-number', counter )
+  spanDiv.setAttribute('data-number', counter )
   inputDiv.addEventListener('click', function(event) {;
   toggleClickedNumber = event.target.getAttribute('data-number')
   bookItem = myLibrary[toggleClickedNumber]
   bookItem.toggle()
   })
+  
+
+
+
   return labelDiv
 };
 
@@ -146,14 +164,17 @@ Book.prototype.toggle = function(){
 
 UI.prototype.createTrashCan = function(){
   let div = document.createElement('div')
-  div.setAttribute('data-number', myLibrary.length - 1)
+  div.setAttribute('data-number', counter )
   div.id = 'theDiv'
   let trashDiv = document.createElement('i')
+  trashDiv.setAttribute('data-number', counter )
+
+
   trashDiv.classList = 'fa fa-trash-o fa-2x'
   div.appendChild(trashDiv)
   let ui = new UI()
   trashDiv.addEventListener('click', ui.deleteLine)
-  trashDiv.setAttribute('data-number', myLibrary.length - 1)
+ 
   return div
 };
 
