@@ -86,22 +86,24 @@ UI.prototype.createInfoLine = function(book1){
 };
 
 UI.prototype.deleteLine = function(e){
-  let dataA = e.target.getAttribute('data-number');
-  e.currentTarget.parentElement.remove();
-  e.target.remove();
-  book1.bookFilter(e)
+  let dataA = e.target.parentElement.getAttribute('data-number');
+
   let dataFromDiv = Array.from(document.querySelectorAll(`[data-number="${dataA}"]`))
    dataFromDiv.forEach(item => {
      let bookTitleContainer = document.getElementById('book-title-container')
      bookTitleContainer.removeChild(item)
      })
+    
+     book1.bookFilter(e)
 }
 
 Book.prototype.bookFilter = function(e){
-  let dataA = e.target.getAttribute('data-number')
+  let dataA = e.target.parentElement.getAttribute('data-number')
   myLibrary = myLibrary.filter(book => {
     return book.counter != dataA
-  })  
+  })
+  e.target.parentElement.remove();
+  e.target.remove();  
 }
 
 UI.prototype.addBookToLibrary = function() {
@@ -135,8 +137,8 @@ UI.prototype.createToggleButton = function(book1){
   labelDiv.insertBefore(spanDiv, inputDiv.nextSibling);
   book1.status == "Yes" ? inputDiv.checked = true : inputDiv.checked = false
   labelDiv.setAttribute('data-number', counter )
-  inputDiv.setAttribute('data-number', counter )
-  spanDiv.setAttribute('data-number', counter )
+  // inputDiv.setAttribute('data-number', counter )
+  // spanDiv.setAttribute('data-number', counter )
   inputDiv.addEventListener('click', function(event) {;
   toggleClickedNumber = event.target.getAttribute('data-number')
   bookItem = myLibrary.find(book => book.counter == toggleClickedNumber)
@@ -150,7 +152,7 @@ UI.prototype.createTrashCan = function(){
   div.setAttribute('data-number', counter )
   div.id = 'theDiv'
   let trashDiv = document.createElement('i')
-  trashDiv.setAttribute('data-number', counter )
+  // trashDiv.setAttribute('data-number', counter )
   trashDiv.classList = 'fa fa-trash-o fa-2x'
   div.appendChild(trashDiv)
   trashDiv.addEventListener('click', ui.deleteLine)
