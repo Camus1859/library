@@ -38,7 +38,6 @@ Book.prototype.toggle = function(){
   }
 }
 
-
 function UI(){};
 let ui = new UI()
 let ui2 = new UI();
@@ -87,19 +86,15 @@ UI.prototype.createInfoLine = function(book1){
 };
 
 UI.prototype.deleteLine = function(e){
-  let dataA = e.target.getAttribute('data-number')
-  e.target.parentElement.remove()
-  e.target.remove()
-  let dataFromDiv = Array.from(document.querySelectorAll(`h3[data-number="${dataA}"]`))
+  let dataA = e.target.getAttribute('data-number');
+  e.currentTarget.parentElement.remove();
+  e.target.remove();
+  book1.bookFilter(e)
+  let dataFromDiv = Array.from(document.querySelectorAll(`[data-number="${dataA}"]`))
    dataFromDiv.forEach(item => {
      let bookTitleContainer = document.getElementById('book-title-container')
      bookTitleContainer.removeChild(item)
-     let dataFromLabel = Array.from(document.querySelectorAll(`label[data-number="${dataA}"]`))
-     dataFromLabel.forEach(item =>{
-      bookTitleContainer.removeChild(item)
      })
-  })
-book1.bookFilter(e)
 }
 
 Book.prototype.bookFilter = function(e){
