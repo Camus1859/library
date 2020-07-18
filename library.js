@@ -1,101 +1,31 @@
 let myLibrary = [];
-let title;
-let author;
-let numberOfPages;
-let string;
-let bookTitleContainer = document.getElementById('book-title-container')
-let userButtonsContainer
-let h3;
-let book1; 
 let submitButton = document.getElementById('submit-button');
 let addBookButton = document.getElementById('add-book-button');
-let checkBox2 = document.getElementById('checkBox2')
+let bookTitleContainer = document.getElementById('book-title-container');
 
-submitButton.addEventListener('click', addBookToLibrary);
-addBookButton.addEventListener('click', visibilityOn);
+submitButton.addEventListener('click', function(){
+  ui.addBookToLibrary()
+});
+addBookButton.addEventListener('click', function(){
+  ui.visibilityOn()
+});
 
-function noDisplay() {
-  userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
-  bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
-};
-noDisplay();
+let add = (function () {
+  let counter = -1;
+  return function () {
+    counter = counter + 1;
+    return counter
+  }
+})()
+
 
 function Book(title, author, numberOfPages, status) {
+  counter = add()
   this.title = title,
   this.author = author,
   this.numberOfPages = numberOfPages
   this.status = status
-};
-
-function addBookToLibrary(e){
-  title = document.getElementById('book-title').value
-  author = document.getElementById('author').value
-  numberOfPages = document.getElementById('pages').value;
-  if (title === "" || author === "" || numberOfPages === "")  {
-    alert("Please Fill All Lines")
-    return false;
-  }else{
-  visibilityOff()
-  bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid' 
-  checkBox = document.getElementById('checkBox')
-  checkBox.checked == true ? status = "Yes" : status ='No'
-  book1 = new Book(title, author, numberOfPages, status)
-  myLibrary.push(book1)
-  createInfoLine(book1)
-  }
-};
-
-function visibilityOff(){
-  userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
-};
-
-function visibilityOn() {
-  userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
-  bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
-  document.getElementById("myForm").reset()
-};
-
-function createInfoLine(obj) {
-  for(let property in obj){
-    if (obj.hasOwnProperty(property)) {
-    h3 = document.createElement('h3');
-    if (`${obj[property]}` == "No" || `${obj[property]}` == 'Yes') {
-      continue; 
-    }else {
-       newContent = document.createTextNode(`${obj[property]}`)
-    }
-    h3.classList.add('eachBook')
-    h3.appendChild(newContent);
-    bookTitleContainer = document.getElementById('book-title-container')
-    x = bookTitleContainer.appendChild(h3)
-      x.setAttribute('data-number', myLibrary.length -1)
-    }
-  }
-  bookTitleContainer.appendChild(createToggleButton(obj))
-  bookTitleContainer.appendChild(createTrashCan())
-};
-
-function createToggleButton(obj) {
-  let labelDiv = document.createElement('label')
-  labelDiv.setAttribute('data-number', myLibrary.length - 1)
-  labelDiv.classList = 'switch'
-  labelDiv.id = 'toggle-button'
-  inputDiv = document.createElement('input')
-  inputDiv.setAttribute('type', 'checkbox')
-  inputDiv.setAttribute('data-number', myLibrary.length - 1)
-  inputDiv.id = 'checkBox2'
-  labelDiv.appendChild(inputDiv)
-  let spanDiv = document.createElement('span')
-  spanDiv.setAttribute('data-number', myLibrary.length - 1)
-  spanDiv.classList = ('slider round')
-  labelDiv.insertBefore(spanDiv, inputDiv.nextSibling);
-  obj.status == "Yes" ? inputDiv.checked = true : inputDiv.checked = false
-  inputDiv.addEventListener('click', function(event) {;
-  toggleClickedNumber = event.target.getAttribute('data-number')
-  bookItem = myLibrary[toggleClickedNumber]
-  bookItem.toggle()
-  })
-  return labelDiv
+  this.counter = counter
 };
 
 Book.prototype.toggle = function(){
@@ -106,33 +36,135 @@ Book.prototype.toggle = function(){
   }
 }
 
-function createTrashCan(){
+Book.prototype.bookFilter = function(e){
+  let dataA = e.target.parentElement.getAttribute('data-number')
+  myLibrary = myLibrary.filter(book => {
+    return book.counter != dataA
+  })
+  ui.remElement(e)
+}
+
+Book.prototype.findNum = function(){
+  bookItem = myLibrary.find(book => book.counter == toggleClickedNumber)
+  bookItem.toggle()
+}
+
+Book.prototype.pushBook = function(){
+  myLibrary.push(book1)
+}
+
+function UI(){};
+let ui = new UI()
+
+UI.prototype.noDisplay = function() {
+ let userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
+ bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
+};
+// look into "DOMContentLoaded"
+ui.noDisplay();
+
+
+UI.prototype.visibilityOff = function(){
+  let userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
+};
+ui.visibilityOff();
+
+
+UI.prototype.visibilityOn = function() {
+  let userButtonsContainer = document.getElementById('user-buttons-container').style.display = ''
+  bookTitleContainer = document.getElementById('book-title-container').style.display = 'none'
+  document.getElementById("myForm").reset()
+};
+
+UI.prototype.createInfoLine = function(book1){
+  for(let property in book1){
+    if (book1.hasOwnProperty(property)) {
+    let h3 = document.createElement('h3');
+    if (`${book1[property]}` == "No" || `${book1[property]}` == 'Yes' || `${book1[property]}` >= 0) {
+      continue; 
+    }else{
+       newContent = document.createTextNode(`${book1[property]}`)
+    }
+    h3.classList.add('eachBook')
+    h3.appendChild(newContent);
+    bookTitleContainer = document.getElementById('book-title-container')
+    let theBookLine = bookTitleContainer.appendChild(h3)
+    theBookLine.setAttribute('data-number', counter )
+    }
+  }
+  bookTitleContainer = document.getElementById('book-title-container')
+  bookTitleContainer.appendChild(ui.createToggleButton(book1))
+  bookTitleContainer.appendChild(ui.createTrashCan())
+};
+
+UI.prototype.deleteLine = function(e){
+  let dataA = e.target.parentElement.getAttribute('data-number');
+
+  let dataFromDiv = Array.from(document.querySelectorAll(`[data-number="${dataA}"]`))
+   dataFromDiv.forEach(item => {
+     bookTitleContainer = document.getElementById('book-title-container')
+     bookTitleContainer.removeChild(item)
+     })
+    // this shouldn't necessarily be in your UI prototype
+     book1.bookFilter(e)
+}
+
+UI.prototype.remElement = function(e){
+  e.target.parentElement.remove();
+  e.target.remove(); 
+}
+
+UI.prototype.addBookToLibrary = function() {
+  title = document.getElementById('book-title').value
+  author = document.getElementById('author').value
+  numberOfPages = document.getElementById('pages').value;
+  if (title === "" || author === "" || numberOfPages === "")  {
+    alert("Please Fill All Lines")
+    return false;
+  }else{
+  ui.visibilityOff()
+  bookTitleContainer = document.getElementById('book-title-container').style.display = 'grid' 
+  checkBox = document.getElementById('checkBox')
+  checkBox.checked == true ? status = "Yes" : status ='No'
+  book1 = new Book(title, author, numberOfPages, status)
+  book1.pushBook()
+  ui.createInfoLine(book1)
+  }
+};
+
+UI.prototype.createToggleButton = function(book1){
+  let labelDiv = document.createElement('label')
+  labelDiv.classList = 'switch'
+  labelDiv.id = 'toggle-button'
+  inputDiv = document.createElement('input')
+  inputDiv.setAttribute('type', 'checkbox')
+  inputDiv.id = 'checkBox2'
+  labelDiv.appendChild(inputDiv)
+  let spanDiv = document.createElement('span')
+  spanDiv.classList = ('slider round')
+  labelDiv.insertBefore(spanDiv, inputDiv.nextSibling);
+  book1.status == "Yes" ? inputDiv.checked = true : inputDiv.checked = false
+  labelDiv.setAttribute('data-number', counter )
+  inputDiv.addEventListener('click', toggleClicked)
+  return labelDiv
+}
+
+UI.prototype.createTrashCan = function(){
   let div = document.createElement('div')
-  div.setAttribute('data-number', myLibrary.length - 1)
+  div.setAttribute('data-number', counter )
   div.id = 'theDiv'
   let trashDiv = document.createElement('i')
   trashDiv.classList = 'fa fa-trash-o fa-2x'
   div.appendChild(trashDiv)
-  trashDiv.addEventListener('click', deleteLine)
-  trashDiv.setAttribute('data-number', myLibrary.length - 1)
+  trashDiv.addEventListener('click', ui.deleteLine)
   return div
 };
 
-function deleteLine(e) {
-  let dataA = e.target.getAttribute('data-number') 
-  let dataFromDiv = Array.from(document.querySelectorAll(`h3[data-number="${dataA}"]`))
-   dataFromDiv.forEach(item => {
-     bookTitleContainer = document.getElementById('book-title-container')
-     bookTitleContainer.removeChild(item)
-     let dataFromLabel = Array.from(document.querySelectorAll(`label[data-number="${dataA}"]`))
-     dataFromLabel.forEach(item =>{
-      bookTitleContainer = document.getElementById('book-title-container')
-      bookTitleContainer.removeChild(item)
-     })
-  })
-     bookRemoved = myLibrary.splice(dataA, 1)
-     e.target.parentElement.remove()
-     e.target.remove()
- };
+function toggleClicked(event){
+  toggleClickedNumber = event.target.parentElement.getAttribute('data-number')
+  // consider making find a Book prototype method, and see if you can chain these methods together!
+book1.findNum()
+};
+
 
   
