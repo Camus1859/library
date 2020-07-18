@@ -1,4 +1,6 @@
+
 let myLibrary = [];
+//get into the habit of const if something will not change
 let submitButton = document.getElementById('submit-button');
 let addBookButton = document.getElementById('add-book-button');
 
@@ -10,7 +12,7 @@ addBookButton.addEventListener('click', function(){
   ui.visibilityOn()
 });
 
-
+// const
 let add = (function () {
   let counter = -1;
   return function () {
@@ -28,6 +30,8 @@ function Book(title, author, numberOfPages, status) {
   this.status = status
   this.counter = counter
 };
+
+// is it necessary to instantiate this book here?
 let book1 = new Book()
 
 Book.prototype.toggle = function(){
@@ -39,6 +43,7 @@ Book.prototype.toggle = function(){
 }
 
 function UI(){};
+// what is the purpose of having both of these?
 let ui = new UI()
 let ui2 = new UI();
 
@@ -48,6 +53,7 @@ UI.prototype.noDisplay = function() {
 };
 // look into "DOMContentLoaded"
 ui.noDisplay();
+
 
 UI.prototype.visibilityOff = function(){
   let userButtonsContainer = document.getElementById('user-buttons-container').style.display = 'none'
@@ -62,19 +68,24 @@ UI.prototype.visibilityOn = function() {
 };
 
 UI.prototype.createInfoLine = function(book1){
+  // why is this here?
   counter 
   for(let property in book1){
     if (book1.hasOwnProperty(property)) {
     let h3 = document.createElement('h3');
+    // there's a cleaner way to skip over this particular property 
     if (`${book1[property]}` == "No" || `${book1[property]}` == 'Yes') {
       continue; 
     }else if(`${book1[property]}` >= 0){
+      // same with this, much cleaner ways to skip properties you don't want 
       continue;
     }else{
+      // book1 the *parameter* is not the same as the global variable book1, name your variables more semantically 
        newContent = document.createTextNode(`${book1[property]}`)
     }
     h3.classList.add('eachBook')
     h3.appendChild(newContent);
+    // at this point, you're using this same variable everywhere, just make it global
     let bookTitleContainer = document.getElementById('book-title-container')
     let theBookLine = bookTitleContainer.appendChild(h3)
     theBookLine.setAttribute('data-number', counter )
@@ -93,7 +104,7 @@ UI.prototype.deleteLine = function(e){
      let bookTitleContainer = document.getElementById('book-title-container')
      bookTitleContainer.removeChild(item)
      })
-    
+    // this shouldn't necessarily be in your UI prototype
      book1.bookFilter(e)
 }
 
@@ -102,6 +113,7 @@ Book.prototype.bookFilter = function(e){
   myLibrary = myLibrary.filter(book => {
     return book.counter != dataA
   })
+  // this should not be in your book prototype. this is a UI action and thus should be in your UI prototype. Don't mix these 
   e.target.parentElement.remove();
   e.target.remove();  
 }
@@ -119,7 +131,11 @@ UI.prototype.addBookToLibrary = function() {
   checkBox = document.getElementById('checkBox')
   checkBox.checked == true ? status = "Yes" : status ='No'
   book1 = new Book(title, author, numberOfPages, status)
+
+  // this should not be in your UI prototype 
   myLibrary.push(book1)
+
+
   ui.createInfoLine(book1)
   }
 };
@@ -141,6 +157,8 @@ UI.prototype.createToggleButton = function(book1){
   // spanDiv.setAttribute('data-number', counter )
   inputDiv.addEventListener('click', function(event) {;
   toggleClickedNumber = event.target.getAttribute('data-number')
+  // consider making find a Book prototype method, and see if you can chain these methods together!
+  // maybe consider making this a named function, rather than writing the code in your callback since it's so much code here already, and for organization's sake
   bookItem = myLibrary.find(book => book.counter == toggleClickedNumber)
   bookItem.toggle()
   })
@@ -148,6 +166,7 @@ UI.prototype.createToggleButton = function(book1){
 };
 
 UI.prototype.createTrashCan = function(){
+  // get used to using const
   let div = document.createElement('div')
   div.setAttribute('data-number', counter )
   div.id = 'theDiv'
