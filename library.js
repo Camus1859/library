@@ -80,7 +80,7 @@ UI.prototype.createInfoLine = function(book1){
   for(let property in book1){
     if (book1.hasOwnProperty(property)) {
     let h3 = document.createElement('h3');
-    if (`${book1[property]}` == "No" || `${book1[property]}` == 'Yes' || `${book1[property]}` >= 0) {
+    if (`${book1[property]}` == "No" || `${book1[property]}` == 'Yes' || `${book1[property]}` == counter) {
       continue; 
     }else{
        newContent = document.createTextNode(`${book1[property]}`)
@@ -99,20 +99,24 @@ UI.prototype.createInfoLine = function(book1){
 
 UI.prototype.deleteLine = function(e){
   let dataA = e.target.parentElement.getAttribute('data-number');
-  let titleOfBookDeleted = document.getElementById('toggle-button').previousElementSibling.previousElementSibling.previousElementSibling.innerHTML
+  console.log(dataA)
+  let titleOfBookDeleted = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML
   console.log(titleOfBookDeleted)
   let currentBooksInStorage = JSON.parse(localStorage.getItem('Library'))
   updatedBooksInStorage = currentBooksInStorage.filter(book =>{
    return book.title != titleOfBookDeleted
   })
-  localStorage.setItem('Library', JSON.stringify(updatedBooksInStorage))
+localStorage.setItem('Library', JSON.stringify(updatedBooksInStorage))
+
   let dataFromDiv = Array.from(document.querySelectorAll(`[data-number="${dataA}"]`))
    dataFromDiv.forEach(item => {
      bookTitleContainer = document.getElementById('book-title-container')
      bookTitleContainer.removeChild(item)
-    })
+    
+     })
     // this shouldn't necessarily be in your UI prototype
      book1.bookFilter(e)
+   
 }
 
 UI.prototype.remElement = function(e){
@@ -178,12 +182,20 @@ submitButton.addEventListener('click', saveToStorage);
 function saveToStorage(){
   let book = myLibrary[myLibrary.length - 1]
   if(localStorage.getItem('Library') === null) {
-  myLibrary = []
-  }
-  else{
+    myLibrary = []
+  }else{
     myLibrary = JSON.parse(localStorage.getItem('Library'));
   }
   myLibrary.push(book)
   localStorage.setItem('Library', JSON.stringify(myLibrary))
 }
 
+function renderBooksOnPage(){
+  if(localStorage.getItem('Library') === null) {
+    myLibrary = []
+  
+}
+
+}
+
+renderBooksOnPage()
