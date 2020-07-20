@@ -99,12 +99,18 @@ UI.prototype.createInfoLine = function(book1){
 
 UI.prototype.deleteLine = function(e){
   let dataA = e.target.parentElement.getAttribute('data-number');
-
+  let titleOfBookDeleted = document.getElementById('toggle-button').previousElementSibling.previousElementSibling.previousElementSibling.innerHTML
+  console.log(titleOfBookDeleted)
+  let currentBooksInStorage = JSON.parse(localStorage.getItem('Library'))
+  updatedBooksInStorage = currentBooksInStorage.filter(book =>{
+   return book.title != titleOfBookDeleted
+  })
+  localStorage.setItem('Library', JSON.stringify(updatedBooksInStorage))
   let dataFromDiv = Array.from(document.querySelectorAll(`[data-number="${dataA}"]`))
    dataFromDiv.forEach(item => {
      bookTitleContainer = document.getElementById('book-title-container')
      bookTitleContainer.removeChild(item)
-     })
+    })
     // this shouldn't necessarily be in your UI prototype
      book1.bookFilter(e)
 }
@@ -167,4 +173,17 @@ book1.findNum()
 };
 
 
-  
+submitButton.addEventListener('click', saveToStorage);
+
+function saveToStorage(){
+  let book = myLibrary[myLibrary.length - 1]
+  if(localStorage.getItem('Library') === null) {
+  myLibrary = []
+  }
+  else{
+    myLibrary = JSON.parse(localStorage.getItem('Library'));
+  }
+  myLibrary.push(book)
+  localStorage.setItem('Library', JSON.stringify(myLibrary))
+}
+
