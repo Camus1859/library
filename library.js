@@ -2,6 +2,7 @@ let myLibrary = [];
 let submitButton = document.getElementById('submit-button');
 let addBookButton = document.getElementById('add-book-button');
 let bookTitleContainer = document.getElementById('book-title-container');
+let toggleClickedNumber;
 
 submitButton.addEventListener('click', function(){
   ui.addBookToLibrary()
@@ -10,6 +11,9 @@ addBookButton.addEventListener('click', function(){
   ui.visibilityOn()
 });
 
+submitButton.addEventListener('click', saveToStorage);
+
+
 let add = (function () {
   let counter = -1;
   return function () {
@@ -17,7 +21,6 @@ let add = (function () {
     return counter
   }
 })()
-
 
 function Book(title, author, numberOfPages, status) {
   counter = add()
@@ -28,14 +31,6 @@ function Book(title, author, numberOfPages, status) {
   this.counter = counter
 };
 
-Book.prototype.toggle = function(){
-  if (this.status === "Yes"){
-    this.status = 'No'
-  } else if (this.status === 'No'){
-    this.status = 'Yes'
-  }
-}
-
 Book.prototype.bookFilter = function(e){
   let dataA = e.target.parentElement.getAttribute('data-number')
   myLibrary = myLibrary.filter(book => {
@@ -45,9 +40,21 @@ Book.prototype.bookFilter = function(e){
 }
 
 Book.prototype.findNum = function(){
-  bookItem = myLibrary.find(book => book.counter == toggleClickedNumber)
-  bookItem.toggle()
+    let currentBooksInStorage = JSON.parse(localStorage.getItem('Library'))
+    localStorage.clear()
+    let bookObjectClicked = currentBooksInStorage.filter(book => {
+    return book.counter === toggleClickedNumber
+    })
+  bookObjectClicked = bookObjectClicked.map(book => {
+    if (book.status === "Yes"){
+      book.status = "No"
+    }else if(book.status === "No"){
+      book.status = "Yes"
+    }
+    localStorage.setItem('Library', JSON.stringify(currentBooksInStorage))
+  })
 }
+
 
 Book.prototype.pushBook = function(){
   myLibrary.push(book1)
@@ -99,24 +106,19 @@ UI.prototype.createInfoLine = function(book1){
 
 UI.prototype.deleteLine = function(e){
   let dataA = e.target.parentElement.getAttribute('data-number');
-  console.log(dataA)
   let titleOfBookDeleted = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML
-  console.log(titleOfBookDeleted)
   let currentBooksInStorage = JSON.parse(localStorage.getItem('Library'))
   updatedBooksInStorage = currentBooksInStorage.filter(book =>{
    return book.title != titleOfBookDeleted
   })
 localStorage.setItem('Library', JSON.stringify(updatedBooksInStorage))
-
   let dataFromDiv = Array.from(document.querySelectorAll(`[data-number="${dataA}"]`))
    dataFromDiv.forEach(item => {
      bookTitleContainer = document.getElementById('book-title-container')
      bookTitleContainer.removeChild(item)
-    
      })
     // this shouldn't necessarily be in your UI prototype
-     book1.bookFilter(e)
-   
+     book1.bookFilter(e) 
 }
 
 UI.prototype.remElement = function(e){
@@ -141,6 +143,7 @@ UI.prototype.addBookToLibrary = function() {
   ui.createInfoLine(book1)
   }
 };
+
 
 UI.prototype.createToggleButton = function(book1){
   let labelDiv = document.createElement('label')
@@ -171,13 +174,10 @@ UI.prototype.createTrashCan = function(){
 };
 
 function toggleClicked(event){
-  toggleClickedNumber = event.target.parentElement.getAttribute('data-number')
+ toggleClickedNumber = Number(event.target.parentElement.getAttribute('data-number'))
   // consider making find a Book prototype method, and see if you can chain these methods together!
 book1.findNum()
 };
-
-
-submitButton.addEventListener('click', saveToStorage);
 
 function saveToStorage(){
   let book = myLibrary[myLibrary.length - 1]
@@ -191,11 +191,19 @@ function saveToStorage(){
 }
 
 function renderBooksOnPage(){
-  if(localStorage.getItem('Library') === null) {
-    myLibrary = []
-  
-}
-
+    if(localStorage.getItem('Library') === null) {
+      myLibrary = []
+  }else{
+    booksInStorage = JSON.parse(localStorage.getItem('Library'))
+    booksInStorage.forEach(book =>{
+      title = book.title
+      author = book.author 
+      numberOfPages = book.numberOfPages
+      status = book.status
+      book1 = new Book(title, author, numberOfPages, status)
+      ui.createInfoLine(book1)
+    })
+  }
 }
 
 renderBooksOnPage()
